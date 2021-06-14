@@ -56,25 +56,75 @@
 					<div class="panel panel-default">
 						<div class="panel-body" align="center" style="margin-top: 2%">
 							<div class="row mt-3 mb-3">
-								<div class="col-sm-4"></div>
-								<div class="col-sm-4" align="center">
-						<form class="mailSchedule" action="mailSchedule.do" method="post" style="margin-top: 35%;">
-								<table class="col-md-6 table table-bordered table-dark"
-									border="1" border-color="white" align="center"
-									style="color: white">
-									<tr>
-										<td colspan="5" align="center"><h3>
-												<b>Send birthday Mails Now</b>
-											</h3></td>
-									</tr>
-									<tr>
-										<td colspan="2" align="center">
-										<input class="btn btn-success btn-block" type="submit"
-											value="Send"></td>
-									</tr>
+								<div class="col-sm-auto" align="center">
+									<table class="col-sm-auto table " align="center">
+										<tr>
+											<form class="mailSchedule" action="mailSchedule.do"
+												method="post" style="margin-top: 35%;">
+												<!--<tr>
+												<td colspan="5" align="center">
+													<h3>
+														<b>Send birthday Mails Now</b>
+													</h3>
+												</td>
+											</tr>
+											<tr>-->
+												<td colspan="2"><input
+													class="btn btn-success btn-block" type="submit"
+													value="Send BirthdayMails"></td>
+												<!-- </tr>
 
-								</table>
-								</form>
+									</table> -->
+											</form>
+
+											<form action="todayBirthdaysFromDb.do" method="get"
+												style="margine-top: 35%;">
+												<td colspan="2" align="center"><input
+													class="btn btn-success btn-block" type="submit"
+													value="Today's Birthday"></td>
+											</form>
+
+											<form action="weekBirthdaysFromDb.do" method="get"
+												style="margine-top: 35%;">
+												<td colspan="2" align="center"><input
+													class="btn btn-success btn-block" type="submit"
+													value="Week Birthdays"></td>
+											</form>
+
+											<form action="monthBirthdaysFromDb.do" method="get"
+												style="margine-top: 35%;">
+												<td colspan="2" align="center"><input
+													class="btn btn-success btn-block" type="submit"
+													value="Month Birthdays"></td>
+											</form>
+
+											<form action="excelToDB.do" method="get"
+												style="margine-top: 35%;">
+												<td colspan="2" align="center"><input
+													class="btn btn-success btn-block" type="submit"
+													value="Update In DB"></td>
+											</form>
+
+											<form action="excelToDB.do">
+											<td colspan="2" align="center"><button
+													class="btn btn-success btn-block" type="submit"
+													formaction="addSubscriber.jsp">AddSubscriber</button></td>
+											</form>
+
+										</tr>
+									</table>
+								</div>
+								<div class="col-sm-auto" align="center">
+									<table class="col-sm-auto " border-color="white" align="center" style="color: white">
+										<c:forEach items="${birthdayList}" var="item">
+											<tr align="center">
+												<td class="col-md-auto" align="center"><c:out
+														value="${item.getFullName()}" /></td>
+												<td class="col-md-auto" align="center"><c:out
+														value="${item.getDob()}" /></td>
+											</tr>
+										</c:forEach>
+									</table>
 								</div>
 							</div>
 						</div>
@@ -86,7 +136,7 @@
 			<nav class="navbar navbar-expand-md navbar-dark bg-dark"> </nav>
 		</div>
 	</div>
-	
+
 	<!-- Latest compiled JavaScript -->
 	<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"

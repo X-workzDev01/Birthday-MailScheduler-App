@@ -1,4 +1,5 @@
 package com.xworkz.birthdayMailSchedular.service;
+
 import java.time.Duration;
 import java.time.LocalTime;
 import java.util.Objects;
@@ -43,7 +44,6 @@ public class LoginServiceImpl implements LoginService {
 	@Override
 	public boolean validateAndLogin(LoginDTO dto) {
 		logger.info("invoked validateAndLogin...");
-
 		String givenPassword = dto.getPassword();
 		loginTime = LocalTime.now();
 		logger.info("Logintime : {}", loginTime);
@@ -58,13 +58,11 @@ public class LoginServiceImpl implements LoginService {
 			logger.info("givenPassword is Incorrect OR Time Out");
 			return false;
 		}
-
 	}
 
 	@Override
 	public boolean generateOTP() {
 		logger.info("invoked generateOTP in service...");
-
 		try {
 			String onetimepass = genarateRandomOTP();
 			temporaryPass = onetimepass;
@@ -72,17 +70,14 @@ public class LoginServiceImpl implements LoginService {
 				logger.info("onetimepass generated in service...");
 				Context context = new Context();
 				context.setVariable("onetimepass", onetimepass);
-
 				String content = templateEngine.process("otpMailTemplate", context);
 				MimeMessagePreparator messagePreparator = mimeMessage -> {
-
 					MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage);
 					messageHelper.setFrom(mailFrom);
 					messageHelper.setTo(toMailId);
 					messageHelper.setSubject(toMailSubject);
 					messageHelper.setText(content, true);
 				};
-
 				boolean mailvalidation = mailService.validateAndSendMailByMailId(messagePreparator);
 
 				if (mailvalidation) {

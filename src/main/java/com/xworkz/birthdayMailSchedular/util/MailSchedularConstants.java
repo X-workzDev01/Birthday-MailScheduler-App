@@ -4,9 +4,13 @@ public class MailSchedularConstants {
 
 	public static final int ExcelCell_Dycription_value = 599;
 	public static final String DecimalFormat_value = "00000000";
+	public static final String DecimalFormat_value_today = "0000";
 	
 	public static final String SimpleDateReadFormat_value = "ddMMyyy";
 	public static final String SimpleDateWriteFormat_value = "dd-MM"; 
+	public static final String SimpleMonthWriteFormat_value = "MM";
+	public static final String SimpleTodayDateFormat_value = "dMM";
+	
 	
 	public static final String Gmail_value_placer = "#green"; 
 	public static final String Outlook_value_placer = "#orange";

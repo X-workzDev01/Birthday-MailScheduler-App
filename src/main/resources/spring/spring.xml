@@ -49,5 +49,23 @@
 		</list>
 		</property>
 	</bean> 
+	
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+		<property name="dataSource" ref="basicDataSource"></property>
+		<property name="annotatedClasses">
+			<list>
+				<value>com.xworkz.birthdayMailSchedular.entity.DetailsEntity</value>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="basicDataSource"
+		class="org.apache.tomcat.dbcp.dbcp2.BasicDataSource">
+		<property name="driverClassName" value="com.mysql.cj.jdbc.Driver"></property>
+		<property name="url" value="jdbc:mysql://localhost:3306/xworkz_master"></property>
+		<property name="username" value="root"></property>
+		<property name="password" value="root"></property>
+	</bean>
 
 </beans>

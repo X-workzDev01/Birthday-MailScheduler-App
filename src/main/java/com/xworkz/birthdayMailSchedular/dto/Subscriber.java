@@ -19,7 +19,7 @@ public class Subscriber implements Serializable {
 	public Subscriber() {
 
 	}
-
+	
 	public Subscriber(String fullName, String email, double date) {
 		this.dob = date;
 		this.fullName = fullName;

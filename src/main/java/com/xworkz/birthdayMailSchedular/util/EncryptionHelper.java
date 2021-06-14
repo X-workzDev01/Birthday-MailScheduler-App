@@ -3,7 +3,9 @@ package com.xworkz.birthdayMailSchedular.util;
 import java.io.UnsupportedEncodingException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
+import java.text.SimpleDateFormat;
 import java.util.Base64;
+import java.util.Date;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
@@ -81,25 +83,96 @@ public class EncryptionHelper {
 
 	}
 
-	
-	
-	
-	  public static void main(String[] args) {
-	  
-	  EncryptionHelper en =new EncryptionHelper();
+	public String encryptEmailId(String emailId) {
+		logger.info("invoking {}");
+		logger.info("encrypting emailId");
+		if (emailId.contains(MailSchedularConstants.Gmail_value_Replacer)) {
+			emailId = emailId.replace(MailSchedularConstants.Gmail_value_Replacer,
+					MailSchedularConstants.Gmail_value_placer);
+			logger.info("emailId encrypted");
+		} else if (emailId.contains(MailSchedularConstants.Outlook_value_Replacer)) {
+			emailId = emailId.replace(MailSchedularConstants.Outlook_value_Replacer,
+					MailSchedularConstants.Outlook_value_placer);
+			logger.info("emailId encrypted");
+		} else if (emailId.contains(MailSchedularConstants.Yahoo_value_Replacer)) {
+			emailId = emailId.replace(MailSchedularConstants.Yahoo_value_Replacer,
+					MailSchedularConstants.Yahoo_value_placer);
+			logger.info("emailId encrypted");
+		}
+		return emailId;
+	}
+
+	public String decryptEmailId(String emailId) {
+		logger.info("invoking {}");
+		logger.info("decrypting emailId");
+		if (emailId.contains(MailSchedularConstants.Gmail_value_placer)) {
+			emailId = emailId.replace(MailSchedularConstants.Gmail_value_placer,
+					MailSchedularConstants.Gmail_value_Replacer);
+			logger.info("emailId decrypted");
+		} else if (emailId.contains(MailSchedularConstants.Outlook_value_placer)) {
+			emailId = emailId.replace(MailSchedularConstants.Outlook_value_placer,
+					MailSchedularConstants.Outlook_value_Replacer);
+			logger.info("emailId decrypted");
+		} else if (emailId.contains(MailSchedularConstants.Yahoo_value_placer)) {
+			emailId = emailId.replace(MailSchedularConstants.Yahoo_value_placer,
+					MailSchedularConstants.Yahoo_value_Replacer);
+			logger.info("emailId decrypted");
+		}
+		return emailId;
+	}
+
+	public Integer encryptDateOfBirth(Date date) {
+		logger.info("formating date");
+		SimpleDateFormat format = new SimpleDateFormat("ddMMyyyy");
+		
+		String formatedDate = format.format(date);
+		logger.info("date formated "+formatedDate+" and converting into Integer");
+		Integer dob = Integer.parseInt(formatedDate);
+		logger.info("date converted into Integer "+ dob);
+		logger.info("encrypting Date of Birth");
+		if (dob != null && dob.toString().length()>=7) {
+			dob+=MailSchedularConstants.ExcelCell_Dycription_value;
+			logger.info("encrypted Date of Birth"+dob);
+		}
+		return dob;
+	}
+
+	public Integer decryptDateOfBirth(Integer dob) {
+		logger.info("invoking {}");
+		logger.info("decrypting Date of Birth");
+		if (dob != null && dob.toString().length()>=7) {
+			dob-=MailSchedularConstants.ExcelCell_Dycription_value;
+			logger.info("decrypted Date of Birth");
+		}
+		return dob;
+	}
+
+	public static void main(String[] args) {
+
+		EncryptionHelper en = new EncryptionHelper();
 //	  String stEn= en.encrypt("xworkzdev@gmail.com");
 //	  System.out.println("Email encrypted key= "+stEn);
 //	  
 //	  String stDC= en.decrypt(stEn);
 //	  System.out.println("Email decrypted key= "+stDC);
-	  
-	   String encPass = en.encrypt("XWORKZ");
-	  System.out.println("encrypted key= "+encPass);
-	  
-	  String decPass= en.decrypt(encPass);
-	  System.out.println("decrypted key= "+decPass);
-	  }
-	 
-	 
-	 
+
+//		String encPass = en.encrypt("XWORKZ");
+//		System.out.println("encrypted key= " + encPass);
+//
+//		String decPass = en.decrypt(encPass);
+//		System.out.println("decrypted key= " + decPass);
+
+//		String emailId = en.encryptEmailId("xworkzodc@outlook.com");
+//		System.out.println(emailId);
+//
+//		emailId = en.decryptEmailId(emailId);
+//		System.out.println(emailId);
+		
+		Integer date = en.encryptDateOfBirth(new Date());
+		System.out.println(date);
+
+		date = en.decryptDateOfBirth(date);
+		System.out.println(date);
+		
+	}
 }

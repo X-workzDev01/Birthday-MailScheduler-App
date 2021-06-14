@@ -18,9 +18,9 @@
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
 		<poi.version>3.17</poi.version>
-		<lombok.version>1.18.12</lombok.version>
+		<lombok.version>1.18.20</lombok.version>
 		<spring.version>5.0.0.RELEASE</spring.version>
-		<hibernate.version>5.0.3.Final</hibernate.version>
+		<hibernate.version>5.4.10.Final</hibernate.version>
 		<mql.verson>8.0.18</mql.verson>
 		<commons-lang3.version>3.9</commons-lang3.version>
 		<commons-io.version>2.1</commons-io.version>
@@ -99,12 +99,11 @@
 			<artifactId>hibernate-core</artifactId>
 			<version>${hibernate.version}</version>
 		</dependency>
-
-		<dependency>
+		<!-- <dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-validator</artifactId>
 			<version>${hibernate.version}</version>
-		</dependency>
+		</dependency> -->
 		<dependency>
 			<groupId>javax.validation</groupId>
 			<artifactId>validation-api</artifactId>

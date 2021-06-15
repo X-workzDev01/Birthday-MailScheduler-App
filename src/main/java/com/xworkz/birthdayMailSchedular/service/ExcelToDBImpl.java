@@ -1,7 +1,10 @@
 package com.xworkz.birthdayMailSchedular.service;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -15,6 +18,7 @@ import com.xworkz.birthdayMailSchedular.dao.ExcelMasterDAO;
 import com.xworkz.birthdayMailSchedular.dto.GetSubscriberDTO;
 import com.xworkz.birthdayMailSchedular.dto.Subscriber;
 import com.xworkz.birthdayMailSchedular.entity.DetailsEntity;
+import com.xworkz.birthdayMailSchedular.util.EncryptionHelper;
 
 @Service
 public class ExcelToDBImpl implements ExcelToDB{
@@ -25,11 +29,8 @@ public class ExcelToDBImpl implements ExcelToDB{
 	private BirthdayMasterDAO dao ;
 	@Autowired
 	private ExcelMasterDAO excelMasterDAO;
-	
-//	public ExcelToDBImpl() {
-//		logger = LoggerFactory.getLogger(getClass());
-//		logger.info("calling counstructor ========== ");
-//	}
+	@Autowired
+	private EncryptionHelper helper;
 	
 	@Override
 	public List<GetSubscriberDTO> writeUniqueDataInDB() throws IOException {
@@ -44,14 +45,16 @@ public class ExcelToDBImpl implements ExcelToDB{
 			logger.info("list of subscriber is not null");
 			for (Subscriber subscriber : list) {
 				logger.info("checking for subsriber"+ subscriber.getFullName()+" is present in DB or not");
-				DetailsEntity userEntity =dao.getByEmail(subscriber.getEmailId());
+				DetailsEntity userEntity =dao.getByEmail(helper.decryptEmailId(subscriber.getEmailId()));
 				if (userEntity == null ) {
 					logger.info("subscriber "+ subscriber.getFullName()+" not present");
 					DetailsEntity entity = new DetailsEntity();
 					logger.info("adding subsriber details to entity");
 					entity.setFullName(subscriber.getFullName());
-					entity.setEmailId(subscriber.getEmailId());
-					entity.setDob((int)subscriber.getDob());
+					entity.setEmailId(helper.decryptEmailId(subscriber.getEmailId()));
+					
+					helper.decryptDateOfBirth((int)subscriber.getDob());
+					entity.setDob(12);
 					
 					int affectedRows =dao.save(entity);
 					if (affectedRows >0) {
@@ -59,28 +62,31 @@ public class ExcelToDBImpl implements ExcelToDB{
 						dto.setFullName(subscriber.getFullName());
 						updatedList.add(dto);
 					}
-					
-//					if (!upload.contains(entity)) {
-//						logger.info("Subscriber "+entity.getFullName()+" adding into list");
-//						upload.add(entity);
-//						logger.info("Subscriber data added in list with name"+ subscriber.getFullName() +" and EmailID " + subscriber.getEmailId());
-//						dto.setFullName(subscriber.getFullName());
-//						updatedList.add(dto);
-//					}
 				}
 			}
-			//int affectedRows=dao.saveAll(upload);
-			//logger.info(affectedRows + "subscriber added in db " , upload);
-			
 		}else {
 			logger.info("Subscriber list sheet is empty");
 		}
 		return updatedList;
 	}
-
 	
-//	public static void main(String[] args) throws IOException {
-//		ExcelToDBImpl dbImpl = new ExcelToDBImpl();
-//		dbImpl.writeUniqueDataInDB();
-//	}
+	static Date convertIntToDate(int n) throws ParseException{
+		String dob=String.valueOf(n);
+		SimpleDateFormat format = new SimpleDateFormat("ddMMyyyy");
+		Date date = format.parse(dob);
+		System.out.println(date.toString());
+		SimpleDateFormat format1 = new SimpleDateFormat("dd-MM-yyyy");
+	String dateOfBirth = format1.format(date);
+	System.out.println(dateOfBirth);
+		return null;
+	}
+	
+	public static void main(String[] args) {
+		try {
+			convertIntToDate(5091999);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 }

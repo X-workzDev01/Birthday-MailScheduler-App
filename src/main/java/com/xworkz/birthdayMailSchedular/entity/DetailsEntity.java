@@ -20,7 +20,7 @@ import lombok.Setter;
 	@NamedQuery(name = "getByEmailId" , query = "from DetailsEntity as bm where bm.emailId= :email"), 
 	@NamedQuery(name = "getAll", query = "from DetailsEntity as bm"),
 	@NamedQuery(name = "getByDob" , query = "from DetailsEntity as bm where bm.dob like CONCAT(:dob,'%')"),
-	@NamedQuery(name = "currentMonthBirthdayList" , query = "from DetailsEntity as bm where bm.dob like CONCAT('_',:dob,'%') OR bm.dob like CONCAT('__',:dob,'%')"),
+	@NamedQuery(name = "currentMonthBirthdayList" , query = "from DetailsEntity as bm where bm.dob like CONCAT('___',:dob,'%')"),
 	@NamedQuery(name = "currentWeekBirthdayList" , query = "from DetailsEntity as bm where bm.dob like CONCAT(:weekDate1,'%') OR  bm.dob like CONCAT(:weekDate2,'%') OR bm.dob like CONCAT(:weekDate3,'%') OR bm.dob like CONCAT(:weekDate4,'%') OR bm.dob like CONCAT(:weekDate5,'%') OR bm.dob like CONCAT(:weekDate6,'%') OR bm.dob like CONCAT(:weekDate7,'%')"),
 	})
 
@@ -35,7 +35,7 @@ public class DetailsEntity {
 	@Column(name = "EMAIL_ID")
 	private String emailId;
 	@Column(name = "DOB")
-	private Integer dob;
+	private String dob;
 	@Column (name = "status")
 	private boolean status;
 

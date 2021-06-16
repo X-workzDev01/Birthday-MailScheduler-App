@@ -36,7 +36,6 @@ public class DBSubscriberServiceImpl implements DBSubscriberService {
 
 		DetailsEntity entity = new DetailsEntity();
 		if (Objects.nonNull(dto)) {
-			dto.setEmailId(helper.encryptEmailId(dto.getEmailId()));
 			logger.info("cheking for Subscriber already exist or not");
 			DetailsEntity detailsEntity = dao.getByEmail(dto.getEmailId());
 			if (!Objects.nonNull(detailsEntity)) {
@@ -44,8 +43,8 @@ public class DBSubscriberServiceImpl implements DBSubscriberService {
 				logger.info("copying properties from AddSubscriberDTO to DetailsEntity");
 				entity.setFullName(dto.getFullName());
 				entity.setEmailId(dto.getEmailId());
-				logger.info("encrypting Date of Birth");
-				entity.setDob(helper.encryptDateOfBirth(dto.getDob()));
+				logger.info("formatting Date of Birth");
+				entity.setDob(HelperUtil.formateDateOfBirth(dto.getDob()));
 				logger.info("DetailsEntity", entity);
 				int affectedRows = dao.save(entity);
 				if (affectedRows > 0) {
@@ -63,6 +62,8 @@ public class DBSubscriberServiceImpl implements DBSubscriberService {
 		return null;
 	}
 
+	
+	
 	public Integer formateDate(Date date) throws ParseException {
 		logger.info("formating date");
 		SimpleDateFormat dateFormat = new SimpleDateFormat("ddMMyyyy");
@@ -77,18 +78,19 @@ public class DBSubscriberServiceImpl implements DBSubscriberService {
 	@Override
 	public List<GetSubscriberDTO> getTodaysBirthdayList() {
 		List<GetSubscriberDTO> todayBirthdayList = new ArrayList<>();
-		GetSubscriberDTO dto= null;
+		GetSubscriberDTO dto = null;
 		try {
 			Date today = new Date();
 			SimpleDateFormat format = new SimpleDateFormat(MailSchedularConstants.SimpleTodayDateFormat_value);
 			String date = format.format(today);
-			int todayDate = Integer.parseInt(date);
-			List<DetailsEntity> detailsEntityList = dao.getByDob(todayDate);
+			List<DetailsEntity> detailsEntityList = dao.getByDob(date);
 			if (Objects.nonNull(detailsEntityList)) {
 				for (DetailsEntity detailsEntity : detailsEntityList) {
-					 dto = new GetSubscriberDTO();
+					dto = new GetSubscriberDTO();
 					dto.setFullName(detailsEntity.getFullName());
-					dto.setDob(date);
+					dto.setDob(detailsEntity.getDob());
+					dto.setEmail(detailsEntity.getEmailId());
+					dto.setStatus(detailsEntity.isStatus());
 					todayBirthdayList.add(dto);
 				}
 			} else {
@@ -103,19 +105,19 @@ public class DBSubscriberServiceImpl implements DBSubscriberService {
 	@Override
 	public List<GetSubscriberDTO> getCurrentMonthBirthdayList() {
 		List<GetSubscriberDTO> currentMonthBirthdayList = new ArrayList<>();
-		GetSubscriberDTO dto= null;
+		GetSubscriberDTO dto = null;
 		try {
 			Date today = new Date();
 			SimpleDateFormat format = new SimpleDateFormat(MailSchedularConstants.SimpleMonthWriteFormat_value);
 			String date = format.format(today);
-			int thisMonth = Integer.parseInt(date);
-			List<DetailsEntity> detailsEntityList = dao.CurrentMonthBirthdayList(thisMonth);
+			List<DetailsEntity> detailsEntityList = dao.CurrentMonthBirthdayList(date);
 			if (Objects.nonNull(detailsEntityList)) {
 				for (DetailsEntity detailsEntity : detailsEntityList) {
-					 dto = new GetSubscriberDTO();
+					dto = new GetSubscriberDTO();
 					dto.setFullName(detailsEntity.getFullName());
-					String dob = String.valueOf(detailsEntity.getDob());
-					dto.setDob(dob);
+					dto.setDob(detailsEntity.getDob());
+					dto.setEmail(detailsEntity.getEmailId());
+					dto.setStatus(detailsEntity.isStatus());
 					currentMonthBirthdayList.add(dto);
 				}
 			} else {
@@ -130,26 +132,27 @@ public class DBSubscriberServiceImpl implements DBSubscriberService {
 	@Override
 	public List<GetSubscriberDTO> getCurrentWeekBirthdayList() {
 		List<GetSubscriberDTO> currentMonthBirthdayList = new ArrayList<>();
-		GetSubscriberDTO dto= null;
+		GetSubscriberDTO dto = null;
 		try {
-			int weekDates[]=HelperUtil.getCurrentWeekDate();
+			String weekDates[] = HelperUtil.getCurrentWeekDate();
 			if (Objects.nonNull(weekDates)) {
 				List<DetailsEntity> detailsEntityList = dao.CurrentWeekBirthdayList(weekDates);
 				if (Objects.nonNull(detailsEntityList)) {
 					for (DetailsEntity detailsEntity : detailsEntityList) {
-						 dto = new GetSubscriberDTO();
+						dto = new GetSubscriberDTO();
 						dto.setFullName(detailsEntity.getFullName());
-						String dob = String.valueOf(detailsEntity.getDob());
-						dto.setDob(dob);
+						dto.setDob(detailsEntity.getDob());
+						dto.setEmail(detailsEntity.getEmailId());
+						dto.setStatus(detailsEntity.isStatus());
 						currentMonthBirthdayList.add(dto);
 					}
 				} else {
 					logger.info("Subscriber List from getListOfSubscribersFromExcel Is null");
 				}
-			}else {
+			} else {
 				logger.info("weekDates array is null");
 			}
-			
+
 		} catch (Exception e) {
 			logger.error("Error msg is {} ", e.getMessage(), e);
 		}

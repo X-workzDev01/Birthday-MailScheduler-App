@@ -11,8 +11,6 @@ public class GetSubscriberDTO {
 
 	private String fullName;
 	private String dob;
-	
-	public GetSubscriberDTO() {
-		
-	}
+	private String email;
+	private boolean status;
 }

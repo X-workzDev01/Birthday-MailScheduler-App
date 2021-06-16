@@ -21,72 +21,75 @@ import com.xworkz.birthdayMailSchedular.entity.DetailsEntity;
 import com.xworkz.birthdayMailSchedular.util.EncryptionHelper;
 
 @Service
-public class ExcelToDBImpl implements ExcelToDB{
-	
-	private Logger logger=LoggerFactory.getLogger(getClass());
-	
+public class ExcelToDBImpl implements ExcelToDB {
+
+	private Logger logger = LoggerFactory.getLogger(getClass());
+
 	@Autowired
-	private BirthdayMasterDAO dao ;
+	private BirthdayMasterDAO dao;
 	@Autowired
 	private ExcelMasterDAO excelMasterDAO;
 	@Autowired
 	private EncryptionHelper helper;
-	
+
 	@Override
-	public List<GetSubscriberDTO> writeUniqueDataInDB() throws IOException {
+	public List<GetSubscriberDTO> writeUniqueDataInDB() throws IOException, ParseException {
 		logger.info("invoking writeUniqueDataInDB()");
 		logger.info("Getting list of subscriber from excel file");
-		List<Subscriber>  list = excelMasterDAO.getListOfSubscribersFromExcel();
+		List<Subscriber> list = excelMasterDAO.getListOfSubscribersFromExcel();
 		List<GetSubscriberDTO> updatedList = new ArrayList<GetSubscriberDTO>();
-		GetSubscriberDTO dto = new GetSubscriberDTO();
-	//	List<DetailsEntity> upload = new ArrayList<DetailsEntity>();
+		GetSubscriberDTO dto = null;
+		// List<DetailsEntity> upload = new ArrayList<DetailsEntity>();
 		logger.info("checking for list of subscriber is empty or not");
 		if (Objects.nonNull(list)) {
 			logger.info("list of subscriber is not null");
 			for (Subscriber subscriber : list) {
-				logger.info("checking for subsriber"+ subscriber.getFullName()+" is present in DB or not");
-				DetailsEntity userEntity =dao.getByEmail(helper.decryptEmailId(subscriber.getEmailId()));
-				if (userEntity == null ) {
-					logger.info("subscriber "+ subscriber.getFullName()+" not present");
+				logger.info("checking for subsriber" + subscriber.getFullName() + " is present in DB or not");
+				DetailsEntity userEntity = dao.getByEmail(helper.decryptEmailId(subscriber.getEmailId()));
+				if (userEntity == null) {
+					logger.info("subscriber " + subscriber.getFullName() + " not present");
 					DetailsEntity entity = new DetailsEntity();
 					logger.info("adding subsriber details to entity");
 					entity.setFullName(subscriber.getFullName());
 					entity.setEmailId(helper.decryptEmailId(subscriber.getEmailId()));
-					
-					helper.decryptDateOfBirth((int)subscriber.getDob());
-					entity.setDob(12);
-					
-					int affectedRows =dao.save(entity);
-					if (affectedRows >0) {
-						logger.info("Subscriber data added in list with name"+ subscriber.getFullName() +" and EmailID " + subscriber.getEmailId());
-						dto.setFullName(subscriber.getFullName());
+
+					int dateOfBirth = helper.decryptDateOfBirth((int) subscriber.getDob());
+					entity.setDob(convertIntToDate(dateOfBirth));
+					entity.setStatus(false);
+
+					int affectedRows = dao.save(entity);
+					if (affectedRows > 0) {
+						dto = new GetSubscriberDTO();
+						logger.info("Subscriber data added in list with name" + subscriber.getFullName()
+								+ " and EmailID " + subscriber.getEmailId());
+						dto.setFullName(entity.getFullName());
+						dto.setEmail(entity.getEmailId());
+						dto.setDob(entity.getDob());
 						updatedList.add(dto);
 					}
 				}
 			}
-		}else {
+		} else {
 			logger.info("Subscriber list sheet is empty");
 		}
 		return updatedList;
 	}
-	
-	static Date convertIntToDate(int n) throws ParseException{
-		String dob=String.valueOf(n);
-		SimpleDateFormat format = new SimpleDateFormat("ddMMyyyy");
-		Date date = format.parse(dob);
-		System.out.println(date.toString());
-		SimpleDateFormat format1 = new SimpleDateFormat("dd-MM-yyyy");
-	String dateOfBirth = format1.format(date);
-	System.out.println(dateOfBirth);
-		return null;
-	}
-	
-	public static void main(String[] args) {
-		try {
-			convertIntToDate(5091999);
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+
+	String convertIntToDate(int n) throws ParseException {
+		String dob = String.valueOf(n);
+		Date date = null;
+		if (dob.length() == 7) {
+			SimpleDateFormat format = new SimpleDateFormat("dMMyyyy");
+			date = format.parse(dob);
+		}else if (dob.length() == 8) {
+			SimpleDateFormat format = new SimpleDateFormat("ddMMyyyy");
+			date = format.parse(dob);
 		}
+		SimpleDateFormat format1 = new SimpleDateFormat("dd-MM-yyyy");
+		String dateOfBirth = format1.format(date);
+		return dateOfBirth;
 	}
+	
+	
+
 }

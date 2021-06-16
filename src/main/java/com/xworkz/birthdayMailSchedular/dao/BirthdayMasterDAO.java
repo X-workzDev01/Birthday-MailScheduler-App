@@ -14,9 +14,9 @@ public interface BirthdayMasterDAO {
 
 	int saveAll(List<DetailsEntity> entity);
 
-	public List<DetailsEntity> getByDob(Integer dob);
+	public List<DetailsEntity> getByDob(String date);
 
-	public List<DetailsEntity> CurrentMonthBirthdayList(int thisMonth);
+	public List<DetailsEntity> CurrentMonthBirthdayList(String date);
 
-	public List<DetailsEntity> CurrentWeekBirthdayList(int[] weekDates);
+	public List<DetailsEntity> CurrentWeekBirthdayList(String[] weekDates);
 }

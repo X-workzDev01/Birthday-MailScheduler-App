@@ -121,7 +121,11 @@
 												<td class="col-md-auto" align="center"><c:out
 														value="${item.getFullName()}" /></td>
 												<td class="col-md-auto" align="center"><c:out
+														value="${item.getEmail()}" /></td>
+												<td class="col-md-auto" align="center"><c:out
 														value="${item.getDob()}" /></td>
+												<td class="col-md-auto" align="center"><c:out
+														value="${item.isStatus()}" /></td>
 											</tr>
 										</c:forEach>
 									</table>

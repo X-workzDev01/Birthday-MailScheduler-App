@@ -9,7 +9,8 @@ public class MailSchedularConstants {
 	public static final String SimpleDateReadFormat_value = "ddMMyyy";
 	public static final String SimpleDateWriteFormat_value = "dd-MM"; 
 	public static final String SimpleMonthWriteFormat_value = "MM";
-	public static final String SimpleTodayDateFormat_value = "dMM";
+	public static final String SimpleTodayDateFormat_value = "dd-MM";
+	public static final String SimpleDateOfBirthFormat_value = "dd-MM-yyyy";
 	
 	
 	public static final String Gmail_value_placer = "#green"; 

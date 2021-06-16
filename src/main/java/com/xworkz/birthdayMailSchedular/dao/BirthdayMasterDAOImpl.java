@@ -129,7 +129,7 @@ public class BirthdayMasterDAOImpl implements BirthdayMasterDAO {
 	}
 	
 	@Override
-	public List<DetailsEntity> getByDob(Integer dob) {
+	public List<DetailsEntity> getByDob(String dob) {
 		Session session = null;
 		logger.info("invoking {}");
 		List<DetailsEntity> list = new ArrayList<DetailsEntity>();
@@ -156,7 +156,7 @@ public class BirthdayMasterDAOImpl implements BirthdayMasterDAO {
 	}
 
 	@Override
-	public List<DetailsEntity> CurrentMonthBirthdayList(int thisMonth) {
+	public List<DetailsEntity> CurrentMonthBirthdayList(String thisMonth) {
 		Session session = null;
 		logger.info("invoking {}");
 		List<DetailsEntity> list = new ArrayList<DetailsEntity>();
@@ -183,7 +183,7 @@ public class BirthdayMasterDAOImpl implements BirthdayMasterDAO {
 	}
 
 	@Override
-	public List<DetailsEntity> CurrentWeekBirthdayList(int[] weekDates) {
+	public List<DetailsEntity> CurrentWeekBirthdayList(String[] weekDates) {
 		Session session = null;
 		logger.info("invoking {}");
 		List<DetailsEntity> list = new ArrayList<DetailsEntity>();

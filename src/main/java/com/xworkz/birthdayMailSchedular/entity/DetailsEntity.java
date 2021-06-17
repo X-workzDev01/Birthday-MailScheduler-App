@@ -19,6 +19,7 @@ import lombok.Setter;
 @NamedQueries({
 	@NamedQuery(name = "getByEmailId" , query = "from DetailsEntity as bm where bm.emailId= :email"), 
 	@NamedQuery(name = "getAll", query = "from DetailsEntity as bm"),
+	@NamedQuery(name = "updateStatusByEmailId", query = "UPDATE DetailsEntity SET status=:status WHERE emailId=:emailId "),
 	@NamedQuery(name = "getByDob" , query = "from DetailsEntity as bm where bm.dob like CONCAT(:dob,'%')"),
 	@NamedQuery(name = "currentMonthBirthdayList" , query = "from DetailsEntity as bm where bm.dob like CONCAT('___',:dob,'%')"),
 	@NamedQuery(name = "currentWeekBirthdayList" , query = "from DetailsEntity as bm where bm.dob like CONCAT(:weekDate1,'%') OR  bm.dob like CONCAT(:weekDate2,'%') OR bm.dob like CONCAT(:weekDate3,'%') OR bm.dob like CONCAT(:weekDate4,'%') OR bm.dob like CONCAT(:weekDate5,'%') OR bm.dob like CONCAT(:weekDate6,'%') OR bm.dob like CONCAT(:weekDate7,'%')"),

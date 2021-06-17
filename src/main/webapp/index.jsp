@@ -59,8 +59,8 @@
 								<div class="col-sm-auto" align="center">
 									<table class="col-sm-auto table " align="center">
 										<tr>
-											<form class="mailSchedule" action="mailSchedule.do"
-												method="post" style="margin-top: 35%;">
+											<form class="mailSchedule" action="birthdayMailSchedule.do"
+												method="get" style="margin-top: 35%;">
 												<!--<tr>
 												<td colspan="5" align="center">
 													<h3>
@@ -102,14 +102,14 @@
 												style="margine-top: 35%;">
 												<td colspan="2" align="center"><input
 													class="btn btn-success btn-block" type="submit"
-													value="Update In DB"></td>
+													value="Excel to DB"></td>
 											</form>
 
-											<form action="excelToDB.do">
+											
 											<td colspan="2" align="center"><button
 													class="btn btn-success btn-block" type="submit"
 													formaction="addSubscriber.jsp">AddSubscriber</button></td>
-											</form>
+											
 
 										</tr>
 									</table>

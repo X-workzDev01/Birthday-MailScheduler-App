@@ -19,4 +19,6 @@ public interface BirthdayMasterDAO {
 	public List<DetailsEntity> CurrentMonthBirthdayList(String date);
 
 	public List<DetailsEntity> CurrentWeekBirthdayList(String[] weekDates);
+	
+	public int updateStatusByEmailId(String emailId);
 }

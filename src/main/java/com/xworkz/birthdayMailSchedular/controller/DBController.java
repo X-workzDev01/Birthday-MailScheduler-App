@@ -1,5 +1,7 @@
 package com.xworkz.birthdayMailSchedular.controller;
 
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -12,8 +14,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.xworkz.birthdayMailSchedular.dto.AddSubscriberDTO;
+import com.xworkz.birthdayMailSchedular.dto.GetSubscriberDTO;
 import com.xworkz.birthdayMailSchedular.service.DBSubscriberService;
 import com.xworkz.birthdayMailSchedular.service.ExcelToDB;
+import com.xworkz.birthdayMailSchedular.service.SpringMailService;
 
 @Controller
 @RequestMapping("/")
@@ -24,25 +28,33 @@ public class DBController {
 	
 	@Autowired 
 	private DBSubscriberService dBSubscriberService;
+	
+	@Autowired
+	private SpringMailService springMailService;
 
 	@Autowired
 	private ExcelToDB excelToDB;
 	
 //	@Scheduled(cron = "${bday.cron.expression}" , zone = "IST")
-//	@RequestMapping(value = "/mailSchedule.do", method = RequestMethod.POST)
-//	public ModelAndView sendScheduleMail() {
-//		ModelAndView modelAndView = new ModelAndView("index");
-//		logger.info("invoked sendScheduleMail() in controller");
-//		try {
-//			String report = mailSchedular.birthdayMailSender();
-//            logger.info("Birthady Mails Task Exccution Done");
-//            modelAndView.addObject("mailReport", report);
-//			return modelAndView;
-//		} catch (URISyntaxException | IOException e) {
-//			logger.error("you have an exception in {}"+e.getMessage(), e);
-//		}
-//		return modelAndView;
-//	}
+	@RequestMapping(value = "/birthdayMailSchedule.do", method = RequestMethod.GET)
+	public ModelAndView sendScheduleMail() {
+		ModelAndView modelAndView = new ModelAndView("index");
+		logger.info("invoked sendScheduleMail() in controller");
+		try {
+			List<GetSubscriberDTO> todaysBirthdayList = springMailService.sendBirthdayMails();
+            logger.info("Birthady Mails Task Exccution Done");
+            if(todaysBirthdayList.size() > 0) {
+            	modelAndView.addObject("mailReport", "Total birthday mails sent " + todaysBirthdayList.size());
+            }else {
+            	modelAndView.addObject("mailReport", "No birthday found for today's date,Report Mail sent");
+            }
+            modelAndView.addObject("birthdayList", todaysBirthdayList);
+			return modelAndView;
+		} catch (/*URISyntaxException | IOException*/ Exception e) {
+			logger.error("you have an exception in {}"+e.getMessage(), e);
+		}
+		return modelAndView;
+	}
 	
 	@RequestMapping(value = "/todayBirthdaysFromDb.do", method = RequestMethod.GET)
 	public ModelAndView getTodaysBirthdayList() {

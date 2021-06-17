@@ -80,10 +80,7 @@ public class DBSubscriberServiceImpl implements DBSubscriberService {
 		List<GetSubscriberDTO> todayBirthdayList = new ArrayList<>();
 		GetSubscriberDTO dto = null;
 		try {
-			Date today = new Date();
-			SimpleDateFormat format = new SimpleDateFormat(MailSchedularConstants.SimpleTodayDateFormat_value);
-			String date = format.format(today);
-			List<DetailsEntity> detailsEntityList = dao.getByDob(date);
+			List<DetailsEntity> detailsEntityList = dao.getByDob(HelperUtil.getTodaysDate());
 			if (Objects.nonNull(detailsEntityList)) {
 				for (DetailsEntity detailsEntity : detailsEntityList) {
 					dto = new GetSubscriberDTO();

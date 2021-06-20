@@ -17,50 +17,58 @@ import com.xworkz.birthdayMailSchedular.util.EncryptionHelper;
 
 @Configuration
 public class AppConfig {
-	
+
 	@Autowired
 	private EncryptionHelper encryptionHelper;
 	@Value("${JavaMailSenderImpl.username}")
-	private String username;
+	private String jmsUsername;
 	@Value("${JavaMailSenderImpl.password}")
-	private String password;
-	
+	private String jmsPassword;
+
+	@Value("${DataSource.driverClassName}")
+	private String driverClassName;
+	@Value("${DataSource.url}")
+	private String url;
+	@Value("${DataSource.username}")
+	private String dsUsername;
+	@Value("${DataSource.password}")
+	private String dsPassword;
+
 	@Bean
-	public JavaMailSender getMailSender(){
+	public JavaMailSender getMailSender() {
 		JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
-		
+
 		mailSender.setHost("smtp.gmail.com");
 		mailSender.setPort(587);
-		mailSender.setUsername(encryptionHelper.decrypt(username));
-		mailSender.setPassword(encryptionHelper.decrypt(password));
-		
+		mailSender.setUsername(encryptionHelper.decrypt(jmsUsername));
+		mailSender.setPassword(encryptionHelper.decrypt(jmsPassword));
+
 		Properties javaMailProperties = new Properties();
 		javaMailProperties.put("mail.smtp.starttls.enable", "true");
 		javaMailProperties.put("mail.smtp.auth", "true");
 		javaMailProperties.put("mail.transport.protocol", "smtp");
 		javaMailProperties.put("mail.debug", "true");
-		
-		
+
 		mailSender.setJavaMailProperties(javaMailProperties);
 		return mailSender;
 	}
-	
-	 @Bean
-	    public LocalSessionFactoryBean sessionFactory() {
-	        LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
-	        sessionFactory.setDataSource(dataSource());
-	        sessionFactory.setPackagesToScan("com.xworkz.birthdayMailSchedular.entity");
-	        return sessionFactory;
-	    }
 
-	    @Bean
-	    public DataSource dataSource() {
-	    	DriverManagerDataSource dataSource = new DriverManagerDataSource();
-	        dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
-	        dataSource.setUrl("jdbc:mysql://localhost:3306/xworkz_master");
-	        dataSource.setUsername("root");
-	        dataSource.setPassword("root");
+	@Bean
+	public LocalSessionFactoryBean sessionFactory() {
+		LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
+		sessionFactory.setDataSource(dataSource());
+		sessionFactory.setPackagesToScan("com.xworkz.birthdayMailSchedular.entity");
+		return sessionFactory;
+	}
 
-	        return dataSource;
-	    }
+	@Bean
+	public DataSource dataSource() {
+		DriverManagerDataSource dataSource = new DriverManagerDataSource();
+		dataSource.setDriverClassName(driverClassName);
+		dataSource.setUrl(encryptionHelper.decrypt(url));
+		dataSource.setUsername(encryptionHelper.decrypt(dsUsername));
+		dataSource.setPassword(encryptionHelper.decrypt(dsPassword));
+
+		return dataSource;
+	}
 }

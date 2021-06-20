@@ -37,7 +37,7 @@ public class DetailsEntity {
 	private String emailId;
 	@Column(name = "DOB")
 	private String dob;
-	@Column (name = "status")
+	@Column (name = "STATUS")
 	private boolean status;
 
 }

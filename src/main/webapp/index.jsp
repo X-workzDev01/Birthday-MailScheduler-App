@@ -105,11 +105,12 @@
 													value="Excel to DB"></td>
 											</form>
 
-											
+											<form action="addNewSubscriber.do" method="get"
+												style="margine-top: 35%;">
 											<td colspan="2" align="center"><button
 													class="btn btn-success btn-block" type="submit"
 													formaction="addSubscriber.jsp">AddSubscriber</button></td>
-											
+											</form>
 
 										</tr>
 									</table>

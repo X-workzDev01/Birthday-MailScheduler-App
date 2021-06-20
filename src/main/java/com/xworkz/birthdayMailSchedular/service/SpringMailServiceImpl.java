@@ -110,34 +110,45 @@ public class SpringMailServiceImpl implements SpringMailService {
 							mailId = detailsEntity.getEmailId();
 							logger.info("subscriber mailID {} ", mailId);
 							if (Objects.nonNull(mailId)) {
-								MimeMessagePreparator messagePreparator = mimeMessage -> {
-									MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage);
-									messageHelper.setFrom(mailFrom);
-									messageHelper.setCc(ccmailID);
-									messageHelper.setTo(mailId);
-									messageHelper.setSubject(bdayMailSubject);
-									messageHelper.setText(content, true);
-								};
-								boolean status = false;
-								if (Objects.nonNull(messagePreparator))
-									logger.info("sending birthday mail to "+ detailsEntity.getFullName() );
-								status=validateAndSendMailByMailId(messagePreparator);
-								if (status) {
-									count++;
-									birthdayMasterDAO.updateStatusByEmailId(detailsEntity.getEmailId());									GetSubscriberDTO dto = new GetSubscriberDTO();
+								if(!detailsEntity.isStatus()) {
+									MimeMessagePreparator messagePreparator = mimeMessage -> {
+										MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage);
+										messageHelper.setFrom(mailFrom);
+										messageHelper.setCc(ccmailID);
+										messageHelper.setTo(mailId);
+										messageHelper.setSubject(bdayMailSubject);
+										messageHelper.setText(content, true);
+									};
+									boolean status = false;
+									if (Objects.nonNull(messagePreparator))
+										logger.info("sending birthday mail to "+ detailsEntity.getFullName() );
+									status=validateAndSendMailByMailId(messagePreparator);
+									if (status) {
+										count++;
+										birthdayMasterDAO.updateStatusByEmailId(detailsEntity.getEmailId());
+										GetSubscriberDTO dto = new GetSubscriberDTO();
+										dto.setFullName(detailsEntity.getFullName());
+										dto.setEmail(detailsEntity.getEmailId());
+										dto.setDob(detailsEntity.getDob());
+										dto.setStatus(true);
+										todaysBirthdayList.add(dto);
+									}
+								}else {
+									GetSubscriberDTO dto = new GetSubscriberDTO();
 									dto.setFullName(detailsEntity.getFullName());
 									dto.setEmail(detailsEntity.getEmailId());
 									dto.setDob(detailsEntity.getDob());
-									dto.setStatus(true);
+									dto.setStatus(detailsEntity.isStatus());
 									todaysBirthdayList.add(dto);
+									logger.info("mail already sent for this mail " + detailsEntity.getEmailId());
 								}
+								
 							} else {
 								logger.info(" mailId is empty {}", detailsEntity.getFullName());
 							}
 						}
 					}
 				}
-				
 					// String massage = "Total birthday mails sent";
 					logger.info("Total birthday mails sent {}", count);
 					// sendReportMail(massage, totalMailsent);
@@ -166,7 +177,6 @@ public class SpringMailServiceImpl implements SpringMailService {
 			if (Objects.nonNull(context)) {
 				String content = templateEngine.process("dailyMailReport", context);
 				MimeMessagePreparator messagePreparator = mimeMessage -> {
-
 					MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage);
 					messageHelper.setFrom(mailFrom);
 					messageHelper.setCc(ccmailID);

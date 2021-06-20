@@ -224,18 +224,21 @@ public class BirthdayMasterDAOImpl implements BirthdayMasterDAO {
 			logger.info("Opening session");
 			session = factoryBean.openSession();
 			logger.info("executing native query");
+			Transaction transaction= session.beginTransaction();
 			Query query = session.createNamedQuery("updateStatusByEmailId");
 			logger.info("setting parameter for native query");
 			query.setParameter("status", true);
 			query.setParameter("emailId", emailId);
 			logger.info("Extracting unique result from query");
 			rowsAffected = query.executeUpdate();
+			transaction.commit();
 			logger.info("number of rowsAffected  ", rowsAffected);
 		} catch (Exception e) {
 			logger.error("you have an exception " + e.getMessage(), e);
 		} finally {
 			logger.info("closing DB connection");
 			if (session != null) {
+				
 				session.close();
 				logger.info("session closed");
 			}

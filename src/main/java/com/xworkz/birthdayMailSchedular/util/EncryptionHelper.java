@@ -147,32 +147,4 @@ public class EncryptionHelper {
 		return dob;
 	}
 
-	public static void main(String[] args) {
-
-		EncryptionHelper en = new EncryptionHelper();
-//	  String stEn= en.encrypt("xworkzdev@gmail.com");
-//	  System.out.println("Email encrypted key= "+stEn);
-//	  
-//	  String stDC= en.decrypt(stEn);
-//	  System.out.println("Email decrypted key= "+stDC);
-
-//		String encPass = en.encrypt("XWORKZ");
-//		System.out.println("encrypted key= " + encPass);
-//
-//		String decPass = en.decrypt(encPass);
-//		System.out.println("decrypted key= " + decPass);
-
-//		String emailId = en.encryptEmailId("xworkzodc@outlook.com");
-//		System.out.println(emailId);
-//
-//		emailId = en.decryptEmailId(emailId);
-//		System.out.println(emailId);
-		
-		Integer date = en.encryptDateOfBirth(new Date());
-		System.out.println(date);
-
-		date = en.decryptDateOfBirth(date);
-		System.out.println(date);
-		
-	}
 }

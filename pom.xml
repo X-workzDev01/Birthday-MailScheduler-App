@@ -290,7 +290,7 @@
 	</dependencies>
 
 	<build>
-		<finalName>bulk-mail-app</finalName>
+		<finalName>birthday-mailSchedular-app</finalName>
 		<pluginManagement>
 			<plugins>
 				<plugin>

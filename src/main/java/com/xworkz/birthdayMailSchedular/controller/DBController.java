@@ -5,6 +5,7 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -51,6 +52,13 @@ public class DBController {
 			logger.error("you have an exception in {}"+e.getMessage(), e);
 		}
 		return modelAndView;
+	}
+	
+	@Scheduled(cron = "${status.cron.expression}" , zone = "IST")
+	public void updateStatusAsFalse() {
+		logger.info("invoked updateStatusAsFalse() in MailController");
+		int number=dBSubscriberService.updateStatus();
+		logger.info("Total record updated "+number);
 	}
 	
 	@RequestMapping(value = "/todayBirthdaysFromDb.do", method = RequestMethod.GET)

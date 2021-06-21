@@ -72,11 +72,11 @@
 													style="color: white">
 													<tr>
 														<td><label>Full Name</label></td>
-														<td><input name="fullName" type="text"></td>
+														<td><input name="fullName" type="text" placeholder="Enter your full Name"></td>
 													</tr>
 													<tr>
 														<td><label>EmailId</label></td>
-														<td><input name="emailId" type="text"></td>
+														<td><input name="emailId" type="text" placeholder="Enter your EmailId"></td>
 													</tr>
 													<tr>
 														<td><label>Date Of Birth</label></td>

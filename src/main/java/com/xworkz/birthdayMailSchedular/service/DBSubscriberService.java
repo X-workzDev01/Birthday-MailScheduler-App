@@ -1,6 +1,5 @@
 package com.xworkz.birthdayMailSchedular.service;
 
-import java.io.IOException;
 import java.text.ParseException;
 import java.util.List;
 
@@ -16,5 +15,7 @@ public interface DBSubscriberService {
 	public List<GetSubscriberDTO> getCurrentMonthBirthdayList();
 
 	public List<GetSubscriberDTO> getCurrentWeekBirthdayList();
+
+	public int updateStatus();
 	
 }

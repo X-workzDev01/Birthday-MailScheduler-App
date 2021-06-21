@@ -55,83 +55,70 @@
 						style="margin-top: 5%; color: white; padding-top: 3%">Click here Send birthday Mails Now</h2> -->
 					<div class="panel panel-default">
 						<div class="panel-body" align="center" style="margin-top: 2%">
-							<div class="row mt-3 mb-3">
+							<div class="row mt-4  table table-borderless ">
 								<div class="col-sm-auto" align="center">
-									<table class="col-sm-auto table " align="center">
+									<table class="col-sm-auto table-sm " align="center">
 										<tr>
 											<form class="mailSchedule" action="birthdayMailSchedule.do"
-												method="get" style="margin-top: 35%;">
-												<!--<tr>
-												<td colspan="5" align="center">
-													<h3>
-														<b>Send birthday Mails Now</b>
-													</h3>
-												</td>
-											</tr>
-											<tr>-->
+												method="get">
 												<td colspan="2"><input
 													class="btn btn-success btn-block" type="submit"
-													value="Send BirthdayMails"></td>
-												<!-- </tr>
-
-									</table> -->
+													value="Send BirthdayMails" title="Send Birthday mail for today"></td>
 											</form>
 
-											<form action="todayBirthdaysFromDb.do" method="get"
-												style="margine-top: 35%;">
+											<form action="todayBirthdaysFromDb.do" method="get">
 												<td colspan="2" align="center"><input
 													class="btn btn-success btn-block" type="submit"
-													value="Today's Birthday"></td>
+													value="Today's Birthday" title="Get all todays birthday details"></td>
 											</form>
 
-											<form action="weekBirthdaysFromDb.do" method="get"
-												style="margine-top: 35%;">
+											<form action="weekBirthdaysFromDb.do" method="get">
 												<td colspan="2" align="center"><input
 													class="btn btn-success btn-block" type="submit"
-													value="Week Birthdays"></td>
+													value="Week Birthdays" title="Get all current Week birthday details"></td>
 											</form>
 
-											<form action="monthBirthdaysFromDb.do" method="get"
-												style="margine-top: 35%;">
+											<form action="monthBirthdaysFromDb.do" method="get">
 												<td colspan="2" align="center"><input
 													class="btn btn-success btn-block" type="submit"
-													value="Month Birthdays"></td>
+													value="Month Birthdays" title="Get all this month birthday details"></td>
 											</form>
 
-											<form action="excelToDB.do" method="get"
-												style="margine-top: 35%;">
+											<form action="excelToDB.do" method="get">
 												<td colspan="2" align="center"><input
 													class="btn btn-success btn-block" type="submit"
-													value="Excel to DB"></td>
+													value="Excel to DB" title="Read data from Excel and write into database"></td>
 											</form>
 
-											<form action="addNewSubscriber.do" method="get"
-												style="margine-top: 35%;">
+											<form action="addNewSubscriber.do" method="get">
 											<td colspan="2" align="center"><button
 													class="btn btn-success btn-block" type="submit"
-													formaction="addSubscriber.jsp">AddSubscriber</button></td>
+													formaction="addSubscriber.jsp" title="Add new subscriber">Add Subscriber </button></td>
 											</form>
-
+											
+											<td colspan="2" align="center"><button
+													class="btn btn-success btn-block" target="_blank" type="submit" onclick=" window.open('https://docs.google.com/spreadsheets/d/1UQsZQHCcirpxHIe-FKt_VF8V2_CRNzejS85NLDflk6w', '_blank');"
+													title="Excel file Link"> Excel Link </button></td>
 										</tr>
 									</table>
 								</div>
-								<div class="col-sm-auto" align="center">
-									<table class="col-sm-auto " border-color="white" align="center" style="color: white">
-										<c:forEach items="${birthdayList}" var="item">
-											<tr align="center">
-												<td class="col-md-auto" align="center"><c:out
-														value="${item.getFullName()}" /></td>
-												<td class="col-md-auto" align="center"><c:out
-														value="${item.getEmail()}" /></td>
-												<td class="col-md-auto" align="center"><c:out
-														value="${item.getDob()}" /></td>
-												<td class="col-md-auto" align="center"><c:out
-														value="${item.isStatus()}" /></td>
-											</tr>
-										</c:forEach>
-									</table>
-								</div>
 							</div>
+							<div class="row align-items-center  ">
+								<table class="col-sm-auto " border-color="white" align="center" style="color: white">
+									<c:forEach items="${birthdayList}" var="item">
+										<tr align="center">
+											<td class="col-md-auto" align="center"><c:out
+													value="${item.getFullName()}" /></td>
+											<td class="col-md-auto" align="center"><c:out
+													value="${item.getEmail()}" /></td>
+											<td class="col-md-auto" align="center"><c:out
+													value="${item.getDob()}" /></td>
+											<td class="col-md-auto" align="center"><c:out
+													value="${item.isStatus()}" /></td>
+										</tr>
+									</c:forEach>
+								</table>
+							</div>			
 						</div>
 					</div>
 				</div>

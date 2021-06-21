@@ -16,7 +16,6 @@ import com.xworkz.birthdayMailSchedular.dao.BirthdayMasterDAO;
 import com.xworkz.birthdayMailSchedular.dto.AddSubscriberDTO;
 import com.xworkz.birthdayMailSchedular.dto.GetSubscriberDTO;
 import com.xworkz.birthdayMailSchedular.entity.DetailsEntity;
-import com.xworkz.birthdayMailSchedular.util.EncryptionHelper;
 import com.xworkz.birthdayMailSchedular.util.HelperUtil;
 import com.xworkz.birthdayMailSchedular.util.MailSchedularConstants;
 
@@ -25,9 +24,6 @@ public class DBSubscriberServiceImpl implements DBSubscriberService {
 
 	@Autowired
 	private BirthdayMasterDAO dao;
-
-	@Autowired
-	private EncryptionHelper helper;
 
 	private Logger logger = LoggerFactory.getLogger(getClass());
 
@@ -154,5 +150,12 @@ public class DBSubscriberServiceImpl implements DBSubscriberService {
 			logger.error("Error msg is {} ", e.getMessage(), e);
 		}
 		return currentMonthBirthdayList;
+	}
+
+	@Override
+	public int updateStatus() {
+		logger.info("invoking updateStatus() in service");
+		int numberOfRowAffected=dao.updateStatus();
+		return numberOfRowAffected;
 	}
 }

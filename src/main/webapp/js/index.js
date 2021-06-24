@@ -1,32 +1,9 @@
-/**
- * 
- */
 $(document).ready(function() {
 	allHide();
 	$('.reports').hide();
 });
 
 //let getDropdown = () => fetch('https://raw.githubusercontent.com/xworkzodc/newsfeed/master/mailSender.json').then(data => data.json());
-
-/*async function getDropdownDetails(stringValue) {
-	var data = await getDropdown();
-	if (stringValue == "NewsFeed") {
-		$("#imgURL").attr("value", data.News_Feed);
-		$("#newsImg").attr("src", data.News_Feed).load(function() {
-			this.width;
-		});
-
-		$('#imgURL').val(data.News_Feed);
-	}
-	if (stringValue == "Birthday") {
-		$("#imgURL1").attr("value", data.Birthday);
-		$("#newsImg1").attr("src", data.Birthday).load(function() {
-			this.width;
-		});
-
-		$('#imgURL').val(data.Birthday);
-	}
-}*/
 
 function changeMsgType() {
 	$('#msgTypeChng').val($('#mailType').val());

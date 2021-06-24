@@ -146,5 +146,25 @@ public class EncryptionHelper {
 		}
 		return dob;
 	}
+	
+	public static void main(String[] args) {
+		EncryptionHelper helper = new EncryptionHelper();
+		
+		String url=helper.encrypt("jdbc:mysql://localhost:3306/xworkz_master");
+		System.out.println(url);
+		url = helper.decrypt(url);
+		System.out.println(url);
+		
+		String username=helper.encrypt("root");
+		System.out.println(username);
+		username=helper.decrypt(username);
+		System.out.println(username);
+		
+		String pass=helper.encrypt("root");
+		System.out.println(pass);
+		pass = helper.decrypt(pass);
+		System.out.println(pass);
+		
+	}
 
 }

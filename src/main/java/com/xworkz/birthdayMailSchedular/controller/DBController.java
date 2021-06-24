@@ -23,7 +23,6 @@ public class DBController {
 
 	private Logger logger = LoggerFactory.getLogger(MailScheduleController.class);
 
-	
 	@Autowired 
 	private DBSubscriberService dBSubscriberService;
 	

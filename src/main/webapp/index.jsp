@@ -97,7 +97,7 @@
 											</form>
 											
 											<td colspan="2" align="center"><button
-													class="btn btn-success btn-block" target="_blank" type="submit" onclick=" window.open('https://docs.google.com/spreadsheets/d/1UQsZQHCcirpxHIe-FKt_VF8V2_CRNzejS85NLDflk6w', '_blank');"
+													class="btn btn-success btn-block" target="_blank" type="submit" onclick=" window.open('https://docs.google.com/spreadsheets/d/1zIJN49Jlh2QKUIbC5JkFlquQUoydYctQ/', '_blank');"
 													title="Excel file Link"> Excel Link </button></td>
 										</tr>
 									</table>

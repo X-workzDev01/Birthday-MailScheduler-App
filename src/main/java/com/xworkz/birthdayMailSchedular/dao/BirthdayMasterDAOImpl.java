@@ -38,13 +38,13 @@ public class BirthdayMasterDAOImpl implements BirthdayMasterDAO {
 			n = (int) session.save(entity);
 			logger.info("invoking transaction.commit()");
 			transaction.commit();
-
 		} catch (Exception e) {
+			transaction.rollback();
 			logger.error("you have an exception " + e.getMessage(), e);
 
 		} finally {
 			logger.info("closing DB connection");
-			if (session != null) {
+			if (session != null ) {
 				session.close();
 				logger.info("session closed");
 			}
@@ -69,6 +69,7 @@ public class BirthdayMasterDAOImpl implements BirthdayMasterDAO {
 			transaction.commit();
 
 		} catch (Exception e) {
+			transaction.rollback();
 			logger.error("you have an exception " + e.getMessage(), e);
 
 		} finally {
@@ -156,21 +157,22 @@ public class BirthdayMasterDAOImpl implements BirthdayMasterDAO {
 	}
 
 	@Override
-	public List<DetailsEntity> CurrentMonthBirthdayList(String thisMonth) {
+	public List CurrentMonthBirthdayList(String thisMonth) {
 		Session session = null;
 		logger.info("invoking {}");
-		List<DetailsEntity> list = new ArrayList<DetailsEntity>();
+		List list = null;
 		try {
 			logger.info("Opening session");
 			session = factoryBean.openSession();
 			logger.info("executing native query");
 			Query query = session.createNamedQuery("currentMonthBirthdayList");
 			logger.info("setting parameter for native query");
-			query.setParameter("dob", thisMonth);
+			query.setParameter("month", thisMonth);
 			logger.info("Extracting result from query");
-			list = query.list();
+			list = query.getResultList();
 			logger.info("return DetailsEntity ", list);
 		} catch (Exception e) {
+			e.printStackTrace();
 			logger.error("you have an exception " + e.getMessage(), e);
 		} finally {
 			logger.info("closing DB connection");

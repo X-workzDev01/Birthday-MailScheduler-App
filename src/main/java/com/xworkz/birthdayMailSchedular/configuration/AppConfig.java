@@ -58,7 +58,7 @@ public class AppConfig {
 		LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
 		sessionFactory.setDataSource(dataSource());
 		sessionFactory.setPackagesToScan("com.xworkz.birthdayMailSchedular.entity");
-		sessionFactory.setHibernateProperties(hibernateProperties());
+	//	sessionFactory.setHibernateProperties(hibernateProperties());
 		return sessionFactory;
 	}
 
@@ -73,11 +73,11 @@ public class AppConfig {
 		return dataSource;
 	}
 	
-	private final Properties hibernateProperties() {
-        Properties hibernateProperties = new Properties();
-        hibernateProperties.setProperty(
-          "hibernate.dialect", "org.hibernate.dialect.H2Dialect");
-
-        return hibernateProperties;
-    }
+	/*
+	 * private final Properties hibernateProperties() { Properties
+	 * hibernateProperties = new Properties(); hibernateProperties.setProperty(
+	 * "hibernate.dialect", "org.hibernate.dialect.H2Dialect");
+	 * 
+	 * return hibernateProperties; }
+	 */
 }

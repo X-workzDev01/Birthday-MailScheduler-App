@@ -32,7 +32,7 @@ public class DBController {
 	@Autowired
 	private ExcelToDB excelToDB;
 	
-//	@Scheduled(cron = "${bday.cron.expression}" , zone = "IST")
+	@Scheduled(cron = "${bday.cron.expression}" , zone = "IST")
 	@RequestMapping(value = "/birthdayMailSchedule.do", method = RequestMethod.GET)
 	public ModelAndView sendScheduleMail() {
 		ModelAndView modelAndView = new ModelAndView("index");
@@ -81,7 +81,7 @@ public class DBController {
 		logger.info("invoked getWeeklyBirthdayList() in MailController");
 		try {
 			List list = dBSubscriberService.getCurrentWeekBirthdayList();
-			logger.info("sucessfully get list of todays birthday list");
+			logger.info("sucessfully get list of this weeks birthday list");
 			modelAndView.addObject("birthdayList", list);
 			return modelAndView;
 		} catch (Exception e) {
@@ -96,7 +96,7 @@ public class DBController {
 		logger.info("invoked getMonthBirthdayList() in MailController");
 		try {
 			List list = dBSubscriberService.getCurrentMonthBirthdayList();
-			logger.info("sucessfully get list of todays birthday list");
+			logger.info("sucessfully get list of this monthss birthday list");
 			modelAndView.addObject("birthdayList", list);
 			return modelAndView;
 		} catch (Exception e) {

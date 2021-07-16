@@ -4,26 +4,13 @@
 	<property name="USER_HOME" value=".log" />
 	<property name="LOGDIR" value="${app.workdir}/log" />
 	<timestamp key="bySecond" datePattern="'D'ddMMyyyy'T'HHmmss" />
-	
-	<appender name="FILE-ENGINE" class="ch.qos.logback.core.FileAppender">
-		<!-- <file>${USER_HOME}/log/emailLogfile${bySecond}.log</file>  /opt/log/-->
-		<file>/opt/tomcat1/logs/emailLogfile.log</file>
-		<!-- <file>E:/LogFiles/emailLogfile-${bySecond}.log</file> -->
-		<append>true</append>
-		<encoder>
-			<pattern>%d{yyyy-MM-dd HH:mm:ss} [%thread] - %msg %n</pattern>
-		</encoder>
-		<filter class="ch.qos.logback.classic.filter.LevelFilter">
-			<level>ERROR</level>
-			<onMatch>ACCEPT</onMatch>
-			<onMismatch>ACCEPT</onMismatch>
-		</filter>
-	</appender>
+
 
 	<appender name="STDOUT"
 		class="ch.qos.logback.core.ConsoleAppender">
 		<encoder>
-			<pattern>%-4relative [%thread] %-5level %logger{35} - %msg %n</pattern>
+			<pattern>%-4relative [%thread] %-5level %logger{35} - %msg %n
+			</pattern>
 		</encoder>
 		<filter class="ch.qos.logback.classic.filter.LevelFilter">
 			<level>INFO</level>
@@ -32,15 +19,34 @@
 		</filter>
 	</appender>
 
-	
+	<appender name="FILEROLLER"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<rollingPolicy
+			class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<!-- Monthly rollover -->
+			<fileNamePattern>../logs/Bulk-Mail-App-Logs/%d{yyyy/MM}/Bulk-mail-App-Logfile.log
+			</fileNamePattern>
+
+			<!-- keep 6 month's worth of history capped at 3GB total size -->
+			<maxHistory>6</maxHistory>
+			<totalSizeCap>3GB</totalSizeCap>
+		</rollingPolicy>
+
+		<encoder>
+			<pattern>%d{yyyy-MM-dd HH:mm, IST} [%thread] %-5level %logger -
+				%msg%n</pattern>
+		</encoder>
+	</appender>
+
+
 	<logger name="java.com.xworkz" level="ALL" additivity="false">
-		<appender-ref ref="FILE-ENGINE" />
+		<appender-ref ref="FILEROLLER" />
 		<appender-ref ref="STDOUT" />
 	</logger>
 
 	<root level="ALL">
-		<appender-ref ref="FILE-ENGINE"/>
-		<appender-ref ref="STDOUT"/>
+		<appender-ref ref="FILE-ENGINE" />
+		<appender-ref ref="STDOUT" />
 	</root>
 
 </configuration>

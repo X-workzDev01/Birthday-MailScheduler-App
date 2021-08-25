@@ -114,7 +114,7 @@
 											<td class="col-md-auto" align="center"><c:out
 													value="${item.getDob()}" /></td>
 											<td class="col-md-auto" align="center"><c:out
-													value="${item.isStatus()}" /></td>
+													value="${item.getStatus()}" /></td>
 										</tr>
 									</c:forEach>
 								</table>

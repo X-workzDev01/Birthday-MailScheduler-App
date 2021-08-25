@@ -130,7 +130,7 @@ public class SpringMailServiceImpl implements SpringMailService {
 										dto.setFullName(detailsEntity.getFullName());
 										dto.setEmail(detailsEntity.getEmailId());
 										dto.setDob(detailsEntity.getDob());
-										dto.setStatus(true);
+										dto.setStatus("Mail Sent");
 										todaysBirthdayList.add(dto);
 									}
 								}else {
@@ -138,7 +138,7 @@ public class SpringMailServiceImpl implements SpringMailService {
 									dto.setFullName(detailsEntity.getFullName());
 									dto.setEmail(detailsEntity.getEmailId());
 									dto.setDob(detailsEntity.getDob());
-									dto.setStatus(detailsEntity.isStatus());
+									dto.setStatus("Mail Sent");
 									todaysBirthdayList.add(dto);
 									logger.info("mail already sent for this mail " + detailsEntity.getEmailId());
 								}

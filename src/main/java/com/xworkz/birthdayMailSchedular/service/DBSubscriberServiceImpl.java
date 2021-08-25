@@ -83,7 +83,9 @@ public class DBSubscriberServiceImpl implements DBSubscriberService {
 					dto.setFullName(detailsEntity.getFullName());
 					dto.setDob(detailsEntity.getDob());
 					dto.setEmail(detailsEntity.getEmailId());
-					dto.setStatus(detailsEntity.isStatus());
+					if(detailsEntity.isStatus())
+						dto.setStatus("Mail Sent");
+					else dto.setStatus("Mail Not Sent");
 					todayBirthdayList.add(dto);
 				}
 			} else {
@@ -110,7 +112,9 @@ public class DBSubscriberServiceImpl implements DBSubscriberService {
 					dto.setFullName(detailsEntity.getFullName());
 					dto.setDob(detailsEntity.getDob());
 					dto.setEmail(detailsEntity.getEmailId());
-					dto.setStatus(detailsEntity.isStatus());
+					if(detailsEntity.isStatus())
+						dto.setStatus("Mail Sent");
+					else dto.setStatus("Mail Not Sent");
 					currentMonthBirthdayList.add(dto);
 				}
 			} else {
@@ -136,7 +140,9 @@ public class DBSubscriberServiceImpl implements DBSubscriberService {
 						dto.setFullName(detailsEntity.getFullName());
 						dto.setDob(detailsEntity.getDob());
 						dto.setEmail(detailsEntity.getEmailId());
-						dto.setStatus(detailsEntity.isStatus());
+						if(detailsEntity.isStatus())
+							dto.setStatus("Mail Sent");
+						else dto.setStatus("Mail Not Sent");
 						currentMonthBirthdayList.add(dto);
 					}
 				} else {

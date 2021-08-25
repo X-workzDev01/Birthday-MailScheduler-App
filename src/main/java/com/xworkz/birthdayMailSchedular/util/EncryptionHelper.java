@@ -146,10 +146,4 @@ public class EncryptionHelper {
 		}
 		return dob;
 	}
-	
-	public static void main(String[] args) {
-		EncryptionHelper helper = new EncryptionHelper();
-		System.out.println(helper.decrypt("nUQ2/x76QzlP4WJOw/hmdOLjQKvsQXKKUEDMCZK210IMNJmi3rbT0xefQHCVsF1v6Mu5dAG9fAkv3W9b8klbNfQJNBgNN9yQq5wJ7tj0C+8rfIQaLxIi74vWp1bXFkVu"));
-		
-	}
 }
